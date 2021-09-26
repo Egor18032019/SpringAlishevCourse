@@ -1,24 +1,16 @@
 package org.springcourse.first;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class MusicPlayer {
-    private Music music;
+    @Value("${musicPlayer.name}")
     private String name;
+    @Value("${musicPlayer.volume}")
     private int volume;
-
-    public MusicPlayer() {
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
-    public Music getMusic() {
-        return music;
-    }
 
     public String getName() {
         return name;
@@ -28,16 +20,15 @@ public class MusicPlayer {
         return volume;
     }
 
-    public MusicPlayer(Music music) {
-        this.music = music;
-    }
+
+    @Autowired
+    @Qualifier("classicalMusic")
+    private Music music;
 
 
-    public void playMusic() {
-        System.out.println("Playing: " + music.getSong());
+    public String playMusic() {
+        return "Playing: " + music.getSong() + "volume: " + getVolume()+ " ,song: "+ getName();
+//        System.out.println("Playing: " + classicalMusic.getSong());
     }
 
-    public void setMusic(Music music) {
-        this.music = music;
-    }
 }
